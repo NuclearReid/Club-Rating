@@ -1,45 +1,45 @@
-const { User } = require('../models')
+const { Club } = require('../models')
 const {signToken, AuthenticationError } = require('../utils/auth')
 
 const resolvers = {
     Query: {
 
-        users: async () => {
-            return User.find()
+        clubs: async () => {
+            return Club.find()
         },
 
         me: async (parent, args, context) => {
-            if (context.user) {
-                const foundUser = await User.findOne({
-                    _id: context.user._id,
+            if (context.club) {
+                const foundClub = await Club.findOne({
+                    _id: context.club._id,
                 })
-                return foundUser
+                return foundClub
             }
             throw AuthenticationError
         }
 
     },
     Mutation: {
-        addUser: async (parent, {club, password }) => {
-            const user = await User.create({
-                club,
+        addClub: async (parent, {clubName, password }) => {
+            const club = await Club.create({
+                clubName,
                 password,
             });
-            const token = signToken(user);
-            return {token, user}
+            const token = signToken(club);
+            return {token, club}
         },
-        login: async (parent, {club, password }) => {
-            const user = await User.findOne({ club })
+        login: async (parent, {clubName, password }) => {
+            const club = await Club.findOne({ clubName })
 
-            if(!user) {
+            if(!club) {
                 throw AuthenticationError;
             }
-            const correctPw = await user.isCorrectPassword(password)
+            const correctPw = await club.isCorrectPassword(password)
             if(!correctPw){
                 throw AuthenticationError
             }
-            const token = signToken(user)
-            return {token, user}
+            const token = signToken(club)
+            return {token, club}
         }
     }
 }
