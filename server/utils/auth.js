@@ -6,7 +6,7 @@ const secret = process.env.SECRET;
 const expiration = process.env.EXPIRATION;
 
 module.exports = {
-  AuthenticationError: new GraphQLError("Could not authenticate user.", {
+  AuthenticationError: new GraphQLError("Could not authenticate club.", {
     extensions: {
       code: "UNAUTHENTICATED",
     },
@@ -24,7 +24,7 @@ module.exports = {
 
     try {
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
-      req.user = data;
+      req.club = data;
     } catch (error) {
       console.log("Invalid token");
     }

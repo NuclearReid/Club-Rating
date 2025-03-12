@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useMutation } from "@apollo/client"
 
 import { ADD_CLUB } from "../../utils/mutations"
+import Auth from "../../utils/auth"
 
 import LoginForm from "./loginForm"
 
@@ -15,28 +16,29 @@ export default function SignupForm() {
     confirmPassword: ""
   })
 
-  const [createClub, { error }] = useMutation(ADD_CLUB)
+  const [addClub, { error }] = useMutation(ADD_CLUB)
 
   const handleFormSubmit = async (event) => {
     event.preventDefault()
+
     try {
       if(formState.confirmPassword === formState.password){
-        const { data } = await createClub({
+        const mutationResponse = await addClub({
           variables: { 
-            club: formState.clubName,
-            password: formState.password
+              clubName: formState.clubName,
+              password: formState.password
            }
         })
-        
-        console.log(data)
-      }
-      const token = mutationResponse.data.addUser.token
-      Auth.login(token)
-      
+        const token = mutationResponse.data.addClub.token
+        Auth.login(token)
+      } else {
+        alert("Passwords do not match")
+      }    
     } catch (error) {
       console.error(error)
     }
   }
+
   const handleChange = (event) => {
     const { name, value } = event.target
     setFormState({

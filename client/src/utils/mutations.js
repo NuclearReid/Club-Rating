@@ -1,28 +1,30 @@
 import { gql } from '@apollo/client';
 
 export const ADD_CLUB = gql`
-    mutation addUser(
-        $club: String!
+    mutation addClub(
+        $clubName: String!
         $password: String!
     ) {
-        addUser(
-            club: $club
+        addClub(
+            clubName: $clubName
             password: $password
         ) {
             token
-            User {
+            Club {
                 _id
+                clubName
             }
         }
     }
 `;
 
 export const LOGIN = gql`
-  mutation login($club: String!, $password: String!) {
-    login(club: $club, password: $password) {
+  mutation login($clubName: String!, $password: String!) {
+    login(club: $clubName, password: $password) {
       token
-      User {
-        club
+      Club {
+        _id
+        clubName
       }
     }
   }
