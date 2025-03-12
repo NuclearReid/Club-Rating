@@ -85,8 +85,8 @@ export default function Header() {
 
   return (
     <>
-      {/* Header with frosted glass effect */}
-      <header className="sticky top-0 z-50 mx-auto w-full px-4 py-3">
+      {/* Header with frosted glass effect, positioned on top of the gradient */}
+      <header className="fixed top-0 left-0 right-0 z-50 mx-auto w-full px-4 py-3">
         <div className="mx-auto w-4/5 bg-white/10 backdrop-blur-md rounded-lg shadow-lg">
           <div className="flex justify-between items-center px-6 py-3">
             <div className="flex items-center">
