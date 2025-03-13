@@ -14,9 +14,6 @@ import ClubInfo from "../ClubInfo";
 
 export default function Landing() {
 
-  console.log(Auth.loggedIn()); 
-
-
   return (
     <>
       <div className="relative min-h-screen w-full overflow-hidden">

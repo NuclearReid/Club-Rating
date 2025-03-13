@@ -9,7 +9,7 @@ const typeDefs = gql`
 
     type Auth {
         token: String
-        Club: Club
+        club: Club
     }
 
     type Query{
