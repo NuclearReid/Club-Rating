@@ -16,7 +16,20 @@ const resolvers = {
                 return foundClub
             }
             throw AuthenticationError
-        }
+        },
+        club: async (parent, {clubName}) => {
+            const foundClub = await Club.findOne({clubName})
+            try {
+                if(!foundClub){
+                    throw new Error('no club found')
+                }
+                return {
+                    ...foundClub.toObject()
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        },
 
     },
     Mutation: {
