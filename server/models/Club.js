@@ -12,6 +12,20 @@ const clubSchema = new Schema({
         required: true
         // set up requirments for the password later on
     },
+    clubType: {
+        type: String,
+        required: true,
+        enum: ['beer', 'book', 'wine'], // Add more types as needed
+        default: 'beer'
+    },
+    description: {
+        type: String,
+        default: ''
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
 
 });
 

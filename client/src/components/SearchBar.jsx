@@ -1,10 +1,13 @@
 import { useState } from "react"
-import { FIND_CLUB } from "../../utils/queries";
+import { FIND_CLUB } from "../utils/queries";
 import { useLazyQuery } from "@apollo/client";
+import { useClub } from "../utils/ClubContext";
+
 
 export default function SearchBar() {
-
+  const {setSelectedClub, setShowClubDetails } = useClub()
   const [findClub, {loading, data, error}] = useLazyQuery(FIND_CLUB)
+
   const [formState, setFormState ] = useState({
     clubSearch: ''
   })
@@ -15,16 +18,26 @@ export default function SearchBar() {
       ...formState,
       [name]: value
     })
-  }
+  } 
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
     try {
-      const searchClub = await findClub({
+      const { data } = await findClub({
         variables: {
           clubName: formState.clubSearch
         }
       })
+      // If club is found, set the selected club and show the details
+      if (data && data.club) {
+        setSelectedClub(data.club);
+        setShowClubDetails(true);
+        
+        // Scroll to the club info section
+        document.getElementById('club-info-section')?.scrollIntoView({ 
+          behavior: 'smooth' 
+        });
+      }
 
     } catch (error) {
       console.error(error)
@@ -66,6 +79,28 @@ export default function SearchBar() {
             </button>
           </div>
         </form>
+
+       {/* Show error message if needed */}
+       {error && (
+          <div className="mt-4 p-3 bg-red-500/30 rounded-lg text-white text-center">
+            Error searching for club
+          </div>
+        )}
+        
+        {/* Show "no results" message */}
+        {data && !data.club && (
+          <div className="mt-4 p-3 bg-amber-500/30 rounded-lg text-white text-center">
+            No club found with that name
+          </div>
+        )}
+        
+        {/* Show success message */}
+        {data && data.club && (
+          <div className="mt-4 p-3 bg-green-500/30 rounded-lg text-white text-center">
+            Found {data.club.clubName}! Scroll down to view details.
+          </div>
+        )}
+
       </div>
     </div>
   );

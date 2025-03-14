@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Auth from "../../utils/auth";
 
 import LoginForm from "./loginForm";
-import SearchBar from "./SearchBar";
+import SearchBar from "../../components/SearchBar";
 import Logout from "./Logout";
 
 export default function SearchOrLogin() {

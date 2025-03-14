@@ -1,9 +1,16 @@
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import  {createBrowserRouter, RouterProvider}  from 'react-router-dom'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ClubProvider } from './utils/ClubContext';
 
 import App from './App'
 import Landing from './pages/Landing'
+
+const client = new ApolloClient({
+  uri: '/graphql',
+  cache: new InMemoryCache(),
+});
 
 const router = createBrowserRouter([
   {
@@ -19,7 +26,11 @@ const router = createBrowserRouter([
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router} />
+  <ApolloProvider client={client}>
+    <ClubProvider>
+      <RouterProvider router={router} />
+    </ClubProvider>
+  </ApolloProvider>
 )
     
 
