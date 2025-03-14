@@ -7,13 +7,13 @@ const ClubContext = createContext()
 
 export const ClubProvider = ({children}) => {
 
-    // The different states i'm making available across everything. Just need to make sure to import 'useClub' 
+    // This sends all the info about the club. I thought I would need to set it for each individual part of the schema but it just sends all the data. I'll just pick how i want to use it
     const [selectedClub, setSelectedClub] = useState(null)
     const [showClubDetails, setShowClubDetails] = useState(false)
     return(
         // Also remember to add the new states to the value
         <ClubContext.Provider value={{
-            selectedClub, setSelectedClub, 
+            selectedClub, setSelectedClub,
             showClubDetails, setShowClubDetails
             }} >
                 {children}

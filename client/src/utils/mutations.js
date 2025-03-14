@@ -29,3 +29,14 @@ export const LOGIN = gql`
     }
   }
 `;
+
+export const ADD_DESCRIPTION = gql`
+  mutation addDescription($description: String) {
+    addDescription(description: $description) {
+      clubName
+      clubType
+      description
+      createdAt
+    }
+  }
+`;

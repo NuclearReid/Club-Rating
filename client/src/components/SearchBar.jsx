@@ -30,6 +30,7 @@ export default function SearchBar() {
       })
       // If club is found, set the selected club and show the details
       if (data && data.club) {
+        console.log(data.club)
         setSelectedClub(data.club);
         setShowClubDetails(true);
         

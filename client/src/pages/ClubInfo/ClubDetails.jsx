@@ -6,6 +6,7 @@ export default function ClubDetails() {
     
     // Use real data or fallback to placeholders
     const clubName = selectedClub?.clubName
+    const clubDescription = selectedClub?.description
     
     // Sample data - will be replaced with real data later when implemented
     const nextMeeting = {
@@ -30,7 +31,7 @@ export default function ClubDetails() {
             {clubName}
           </h1>
           <p className="text-xl text-amber-200 max-w-4xl mx-auto text-center mb-12">
-            {selectedClub?.description || 
+            {clubDescription || 
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Our club meets regularly to taste and rate craft beers from around the world, focusing primarily on IPAs and exploring the nuances of hop varieties."}
           </p>
           
