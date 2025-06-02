@@ -8,3 +8,12 @@ export const QUERY_ME = gql`
         }
     }
 `;
+
+export const FIND_CLUB = gql`
+    query Club($clubName: String!) {
+        club(clubName: $clubName) {
+            clubName
+            description
+        }
+    }
+`

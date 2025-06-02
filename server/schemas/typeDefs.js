@@ -5,16 +5,20 @@ const typeDefs = gql`
         _id: ID
         clubName: String!
         password: String!
+        clubType: String!
+        description: String
+        createdAt: String
     }
 
     type Auth {
         token: String
-        Club: Club
+        club: Club
     }
 
     type Query{
         clubs: [Club]
         me: Club
+        club(clubName: String!): Club
     }
 
     type Mutation {
@@ -22,6 +26,10 @@ const typeDefs = gql`
             clubName: String!
             password: String!
         ): Auth
+        
+        addDescription(
+            description: String
+        ): Club
 
         login(
             clubName: String!

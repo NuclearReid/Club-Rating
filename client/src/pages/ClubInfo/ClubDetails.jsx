@@ -1,6 +1,14 @@
+import { useClub } from "../../utils/ClubContext";
+
 export default function ClubDetails() {
-    // Sample data - replace with real data later
-    const clubName = "Hoppy IPA Enthusiasts";
+    // cmd click on useClub() to see what values/'states' I have availble to be accessed.
+    const { selectedClub } = useClub();
+    
+    // Use real data or fallback to placeholders
+    const clubName = selectedClub?.clubName
+    const clubDescription = selectedClub?.description
+    
+    // Sample data - will be replaced with real data later when implemented
     const nextMeeting = {
       date: "March 20, 2025",
       time: "7:00 PM",
@@ -19,11 +27,12 @@ export default function ClubDetails() {
       <div className="min-h-screen bg-gradient-to-b from-amber-800 to-amber-900">
         {/* Club header section */}
         <div className="container mx-auto px-4 py-12">
-          <h1 className="text-4xl md:text-5xl font-bold text-amber-100 mb-4 text-center">{clubName}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold text-amber-100 mb-4 text-center">
+            {clubName}
+          </h1>
           <p className="text-xl text-amber-200 max-w-4xl mx-auto text-center mb-12">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies tincidunt, 
-            nunc nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Our club meets regularly to taste and rate 
-            craft beers from around the world, focusing primarily on IPAs and exploring the nuances of hop varieties.
+            {clubDescription || 
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam euismod, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget ultricies nisl nisl eget nisl. Our club meets regularly to taste and rate craft beers from around the world, focusing primarily on IPAs and exploring the nuances of hop varieties."}
           </p>
           
           {/* Next meeting info card */}
@@ -61,7 +70,8 @@ export default function ClubDetails() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-amber-500/20">
-                    {beerRatings.map((beer, index) => (
+                    {/* Use selected club's beer ratings or fall back to sample data */}
+                    {(selectedClub?.beerRatings || beerRatings).map((beer, index) => (
                       <tr key={index} className={index % 2 === 0 ? "bg-amber-800/30" : "bg-amber-900/30"}>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-amber-100">{beer.name}</td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-amber-200">{beer.brewery}</td>

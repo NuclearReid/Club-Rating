@@ -16,7 +16,20 @@ const resolvers = {
                 return foundClub
             }
             throw AuthenticationError
-        }
+        },
+        club: async (parent, {clubName}) => {
+            const foundClub = await Club.findOne({clubName})
+            try {
+                if(!foundClub){
+                    throw new Error('no club found')
+                }
+                return {
+                    ...foundClub.toObject()
+                }
+            } catch (error) {
+                console.error(error)
+            }
+        },
 
     },
     Mutation: {
@@ -40,7 +53,21 @@ const resolvers = {
             }
             const token = signToken(club)
             return {token, club}
-        }
+        },
+        
+        addDescription: async (parent, {description}, context ) => {
+            if(context.club){
+                const club = await Club.findByIdAndUpdate(
+                    context.club._id,
+                    {description: description},
+                    {new: true}
+                )
+
+                const updatedClub = await Club.findById(context.club._id)
+                return updatedClub
+            }
+            throw AuthenticationError
+        },
     }
 }
 

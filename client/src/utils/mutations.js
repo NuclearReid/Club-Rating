@@ -20,12 +20,23 @@ export const ADD_CLUB = gql`
 
 export const LOGIN = gql`
   mutation login($clubName: String!, $password: String!) {
-    login(club: $clubName, password: $password) {
+    login(clubName: $clubName, password: $password) {
       token
-      Club {
+      club {
         _id
         clubName
       }
+    }
+  }
+`;
+
+export const ADD_DESCRIPTION = gql`
+  mutation addDescription($description: String) {
+    addDescription(description: $description) {
+      clubName
+      clubType
+      description
+      createdAt
     }
   }
 `;

@@ -3,19 +3,12 @@ import Auth from "../../utils/auth";
 
 
 import Header from "../../components/Header";
-import LoginForm from "./loginForm";
-import SearchBar from "./SearchBar";
-import SignupForm from "./SignupForm";
 import LandingBlurb from "./LandingBlurb";
 import SearchOrLogin from "./SearchOrLogin";
-import ClubDetails from "../ClubInfo/ClubDetails";
 import ClubInfo from "../ClubInfo";
 
 
 export default function Landing() {
-
-  console.log(Auth.loggedIn()); 
-
 
   return (
     <>
