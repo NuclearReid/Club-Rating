@@ -1,6 +1,65 @@
-import React from "react";
+import {useEffect, useState } from 'react'
+import { useMutation, useQuery } from "@apollo/client"
+import { ADD_DESCRIPTION } from "../utils/mutations";
+import { QUERY_ME } from '../utils/queries';
+
+
+
+/* 
+    Keep working on this, my brain feels a little toasted!
+*/
 
 export default function GeneralSettingsModal({ setActiveModal, generalForm, handleGeneralChange, handleGeneralSubmit }) {
+  const [findMe, {loading, data, error}] = useQuery(QUERY_ME)
+
+  const [setDescription, {error: descriptionError, data: addDescriptionData, }] = useMutation(ADD_DESCRIPTION)
+
+
+  const currentDescription = data?.description
+
+  const [formState, setFormState] = useState({
+    description: currentDescription,
+    newDescription: ""
+  })
+
+  useEffect(() => {
+    setFormState({
+       description: currentDescription,
+       newDescription: ""
+    })
+  }, [currentDescription])
+
+  const handleChange = (e) => {
+    const {name, value} = e.target
+    setFormState({
+      ...formState,
+      [name]: value
+    })
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+        const { data } = await setDescription({
+          variables: {description: formState.description}
+        })
+        if(formState.description.trim() != ""){
+          await setDescription({
+            variables: {description: formState.description}
+          })
+
+        if(data) {
+
+        }
+        }
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+
+
+  
   return (
     <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-gradient-to-br from-amber-800 to-amber-900 w-4/5 max-w-4xl rounded-xl shadow-2xl">
